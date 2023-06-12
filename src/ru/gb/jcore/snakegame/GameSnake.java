@@ -1,5 +1,9 @@
 package ru.gb.jcore.snakegame;
 
+import ru.gb.jcore.snakegame.data.Food;
+import ru.gb.jcore.snakegame.data.Poison;
+import ru.gb.jcore.snakegame.data.Snake;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -18,9 +22,9 @@ public class GameSnake extends JFrame {
     final static int KEY_UP = 38;              //   of
     final static int KEY_RIGHT = 39;           //   cursor
     final static int KEY_DOWN = 40;            //   keys
-    final int START_SNAKE_SIZE = 5;            // initialization data
-    final int START_SNAKE_X = CANVAS_WIDTH/2;  //   for
-    final int START_SNAKE_Y = CANVAS_HEIGHT/2; //   snake
+    final int START_SNAKE_SIZE = 2;            // initialization data
+    final int START_SNAKE_X = CANVAS_WIDTH / 2;  //   for
+    final int START_SNAKE_Y = CANVAS_HEIGHT / 2; //   snake
     final int SNAKE_DELAY = 150;               // snake delay in milliseconds
     int snakeSize = 0;                         // current snake size
     static boolean gameOver = false;           // a sign game is over or not
@@ -34,14 +38,13 @@ public class GameSnake extends JFrame {
         new GameSnake().game();
     }
 
-    public GameSnake(){
+    public GameSnake() {
         setTitle(TITLE_OF_PROGRAM);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         canvas = new Canvas();
         canvas.setBackground(Color.WHITE);
-        canvas.setPreferredSize(new Dimension(CELL_SIZE * CANVAS_WIDTH,
-                            CELL_SIZE * CANVAS_HEIGHT));
+        canvas.setPreferredSize(new Dimension(CELL_SIZE * CANVAS_WIDTH, CELL_SIZE * CANVAS_HEIGHT));
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -57,32 +60,31 @@ public class GameSnake extends JFrame {
         setVisible(true);
     }
 
-    private void game() {
-        snake = new Snake(
-                START_SNAKE_X,
-                START_SNAKE_Y,
-                START_SNAKE_SIZE,
-                KEY_RIGHT);
 
-        food = new Food(snake,GameSnake.FOOD_COLOR);
+
+    private void game() {
+        snake = new Snake(START_SNAKE_X, START_SNAKE_Y, START_SNAKE_SIZE, KEY_RIGHT);
+
+        food = new Food(snake);
         snake.setFood(food);
-        poison =new Poison(snake);
+        poison = new Poison(snake);
         snake.setPoison(poison);
 
-        while(!gameOver){
+        while (!gameOver) {
             snake.move();
-            if(snake.size() > snakeSize){
+            if (snake.size() != snakeSize) {
                 snakeSize = snake.size();
                 setTitle(TITLE_OF_PROGRAM + ":" + snakeSize);
-            } else setTitle(GAME_OVER_MSG);
+            }
 
-            if(food.isEaten()){
+            if (food.isEaten() || poison.isEaten()) {
                 food.appear();
                 poison.appear();
             }
             canvas.repaint();
             sleep(SNAKE_DELAY);
         }
+        setTitle(GAME_OVER_MSG);
     }
 
     private void sleep(long ms) {    // method for suspending
@@ -98,12 +100,46 @@ public class GameSnake extends JFrame {
         public void paint(Graphics g) {
             super.paint(g);
             Graphics2D g2D = (Graphics2D) g;
-            g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                    RenderingHints.VALUE_ANTIALIAS_ON);
+            g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             snake.paint(g2D);
             food.paint(g2D);
             poison.paint(g2D);
         }
     }
-
+    public static Color getSnakeColor(){
+        return SNAKE_COLOR;
+    }
+    public static Color getFoodColor(){
+        return FOOD_COLOR;
+    }
+    public static Color getPoisonColor() {
+        return POISON_COLOR;
+    }
+    public static int getCellSize(){
+        return CELL_SIZE;
+    }
+    public static int getCanvasWidth(){
+        return CANVAS_WIDTH;
+    }
+    public static int getCanvasHeight(){
+        return CANVAS_HEIGHT;
+    }
+    public static int getKeyUp(){
+        return KEY_UP;
+    }
+    public static int getKeyDown(){
+        return KEY_DOWN;
+    }
+    public static int getKeyLeft(){
+        return KEY_LEFT;
+    }
+    public static int getKeyRight(){
+        return KEY_RIGHT;
+    }
+    public static boolean getGameOver(){
+        return gameOver;
+    }
+    public static void setGameOver(Boolean isGameOver){
+        gameOver=isGameOver;
+    }
 }
