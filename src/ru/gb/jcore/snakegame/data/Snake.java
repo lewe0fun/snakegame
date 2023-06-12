@@ -54,8 +54,11 @@ public class Snake {
 
         if (isInSnake(x, y) ||           // if the snake crosses itself
                 snake.size() < 2) {
-            //poison.isPoison(x, y)) { // or if it eats poison
             GameSnake.setGameOver(true);
+            return;
+        }
+        if (snake.size()==10){
+            GameSnake.setWin(true);
             return;
         }
         snake.addFirst(new Cell(x, y, GameSnakeFrame.getCellSize(), GameSnake.getSnakeColor())); // new head of snake

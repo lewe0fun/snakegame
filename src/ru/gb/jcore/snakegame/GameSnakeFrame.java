@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 public class GameSnakeFrame extends JFrame {
     static final String TITLE_OF_PROGRAM = "Classic Game Snake";
     static final String GAME_OVER_MSG = "GAME OVER";
+    static final String WIN_MSG = "WIN";
     final static int CELL_SIZE = 20;           // size of cell in pix
     final static int CANVAS_WIDTH = 30;        // width in cells
     final static int CANVAS_HEIGHT = 25;       // height in cells

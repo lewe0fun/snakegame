@@ -13,6 +13,7 @@ public class GameSnake {
     final int START_SNAKE_SIZE = 2;            // initialization data
     int snakeSize = 0;                         // current snake size
     static boolean gameOver = false;           // a sign game is over or not
+    static boolean win = false;
     static Snake snake;                     // declare a snake object
     static Food food;                       // declare a food object
     static Poison poison;                   // declare a poison object
@@ -33,7 +34,7 @@ public class GameSnake {
         poison = new Poison(snake);
         snake.setPoison(poison);
 
-        while (!gameOver) {
+        while (!gameOver && !win) {
             snake.move();
             if (snake.size() != snakeSize) {
                 snakeSize = snake.size();
@@ -47,7 +48,8 @@ public class GameSnake {
             GameSnakeFrame.canvas.repaint();
             sleep(GameSnakeFrame.SNAKE_DELAY);
         }
-        gameSnakeFrame.setTitle(GameSnakeFrame.GAME_OVER_MSG);
+        if (win)gameSnakeFrame.setTitle(GameSnakeFrame.WIN_MSG);
+        else gameSnakeFrame.setTitle(GameSnakeFrame.GAME_OVER_MSG);
     }
 
     private void sleep(long ms) {    // method for suspending
@@ -72,5 +74,9 @@ public class GameSnake {
 
     public static void setGameOver(Boolean isGameOver) {
         gameOver = isGameOver;
+    }
+    public static void setWin(Boolean isWin){
+        win=isWin;
+
     }
 }
