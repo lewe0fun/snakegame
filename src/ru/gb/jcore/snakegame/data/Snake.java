@@ -1,12 +1,13 @@
 package ru.gb.jcore.snakegame.data;
 
 import ru.gb.jcore.snakegame.GameSnake;
+import ru.gb.jcore.snakegame.GameSnakeFrame;
 
 import java.awt.*;
 import java.util.LinkedList;
 
 public class Snake {
-    private LinkedList<Cell> snake;
+    private final LinkedList<Cell> snake;
     private int direction;
     private Food food;
     private Poison poison;
@@ -14,7 +15,7 @@ public class Snake {
     public Snake(int x, int y, int length, int direction) {
         snake = new LinkedList<>();
         for (int i = 0; i < length; i++) {
-            snake.add(new Cell(x - i, y, GameSnake.getCellSize(), GameSnake.getSnakeColor()));
+            snake.add(new Cell(x - i, y, GameSnakeFrame.getCellSize(), GameSnake.getSnakeColor()));
         }
         this.direction = direction;
     }
@@ -24,7 +25,7 @@ public class Snake {
     }
 
     public void setDirection(int direction) {
-        if ((direction >= GameSnake.getKeyLeft()) && (direction <= GameSnake.getKeyDown())) {
+        if ((direction >= GameSnakeFrame.getKeyLeft()) && (direction <= GameSnakeFrame.getKeyDown())) {
             if (Math.abs(this.direction - direction) != 2) {
                 this.direction = direction;
             }
@@ -34,55 +35,30 @@ public class Snake {
     public void move() {
         int x = snake.getFirst().getX();
         int y = snake.getFirst().getY();
-/*       final  int left = GameSnake.getKeyLeft();
-       final int right = GameSnake.getKeyRight();
-       final int up = GameSnake.getKeyUp();
-        final int down = GameSnake.getKeyDown();*/
-
-
-        if (direction == GameSnake.getKeyLeft()) {
+        if (direction == GameSnakeFrame.getKeyLeft()) {
             x--;
-            if (x < 0) x = GameSnake.getCanvasWidth() - 1;
+            if (x < 0) x = GameSnakeFrame.getCanvasWidth() - 1;
         }
-        if (direction == GameSnake.getKeyRight()) {
+        if (direction == GameSnakeFrame.getKeyRight()) {
             x++;
-            if (x == GameSnake.getCanvasWidth()) x = 0;
+            if (x == GameSnakeFrame.getCanvasWidth()) x = 0;
         }
-        if (direction == GameSnake.getKeyUp()) {
+        if (direction == GameSnakeFrame.getKeyUp()) {
             y--;
-            if (y < 0) y = GameSnake.getCanvasHeight() - 1;
+            if (y < 0) y = GameSnakeFrame.getCanvasHeight() - 1;
         }
-        if (direction == GameSnake.getKeyDown()) {
+        if (direction == GameSnakeFrame.getKeyDown()) {
             y++;
-            if (y == GameSnake.getCanvasHeight()) y = 0;
+            if (y == GameSnakeFrame.getCanvasHeight()) y = 0;
         }
 
-
-/*        switch (direction) {
-            case left:
-                x--;
-                if (x < 0) x = GameSnake.getCanvasWidth() - 1;
-                break;
-            case right:
-                x++;
-                if (x == GameSnake.getCanvasWidth()) x = 0;
-                break;
-            case up:
-                y--;
-                if (y < 0) y = GameSnake.getCanvasHeight() - 1;
-                break;
-            case down:
-                y++;
-                if (y == GameSnake.getCanvasHeight()) y = 0;
-                break;
-        }*/
         if (isInSnake(x, y) ||           // if the snake crosses itself
                 snake.size() < 2) {
             //poison.isPoison(x, y)) { // or if it eats poison
             GameSnake.setGameOver(true);
             return;
         }
-        snake.addFirst(new Cell(x, y, GameSnake.getCellSize(), GameSnake.getSnakeColor())); // new head of snake
+        snake.addFirst(new Cell(x, y, GameSnakeFrame.getCellSize(), GameSnake.getSnakeColor())); // new head of snake
         if (food.isFood(x, y)) {
             food.eat();
         } else if (poison.isPoison(x, y)) {

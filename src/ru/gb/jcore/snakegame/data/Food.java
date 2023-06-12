@@ -1,20 +1,21 @@
 package ru.gb.jcore.snakegame.data;
 
 import ru.gb.jcore.snakegame.GameSnake;
+import ru.gb.jcore.snakegame.GameSnakeFrame;
 
 import java.awt.*;
 import java.util.Random;
 
 public class Food extends Cell {
-    private Random random;
-    private Snake snake;
+    private final Random random;
+    private final Snake snake;
 
     public Food(Snake snake) {
         this(snake, GameSnake.getFoodColor());
     }
 
     public Food(Snake snake, Color color) {
-        super(-1, -1, GameSnake.getCellSize(), color);
+        super(-1, -1, GameSnakeFrame.getCellSize(), color);
         random = new Random();
         this.snake = snake;
     }
@@ -22,8 +23,8 @@ public class Food extends Cell {
     public void appear() {
         int x, y;
         do {
-            x = random.nextInt(GameSnake.getCanvasWidth());
-            y = random.nextInt(GameSnake.getCanvasHeight());
+            x = random.nextInt(GameSnakeFrame.getCanvasWidth());
+            y = random.nextInt(GameSnakeFrame.getCanvasHeight());
         } while (snake.isInSnake(x, y));
         set(x, y);
     }

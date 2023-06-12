@@ -1,6 +1,7 @@
 package ru.gb.jcore.snakegame.data;
 
 import ru.gb.jcore.snakegame.GameSnake;
+import ru.gb.jcore.snakegame.GameSnakeFrame;
 
 public class Poison extends Food{
     public Poison(Snake snake) {
