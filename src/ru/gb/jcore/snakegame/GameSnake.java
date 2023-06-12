@@ -28,7 +28,6 @@ public class GameSnake {
 
     private void game() {
         snake = new Snake(GameSnakeFrame.START_SNAKE_X, GameSnakeFrame.START_SNAKE_Y, START_SNAKE_SIZE, GameSnakeFrame.KEY_RIGHT);
-
         food = new Food(snake);
         snake.setFood(food);
         poison = new Poison(snake);
